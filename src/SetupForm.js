@@ -9,6 +9,7 @@ const SetupForm = () => {
       <section className='quiz quiz-small'>
         <form className="setup-form" onSubmit={handleSubmit}>
           <h2>Setup Quiz</h2>
+          <h3 >By Habie</h3>
           {/* amount */}
           <div className="form-control">
             <label htmlFor="amount">number of questions</label>
