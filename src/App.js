@@ -5,7 +5,55 @@ import SetupForm from './SetupForm'
 import Loading from './Loading'
 import Modal from './Modal'
 function App() {
-  return <h2>quiz starter</h2>
+  const {waiting, loading, questions, index, betul,nextQuestion,checkAnswer} = useGlobalContext();
+
+  if(waiting){
+    return <SetupForm />
+  }
+
+  if(loading){
+    return <Loading />
+  }
+
+  console.log(questions[0])
+  const {question, correct_answer, incorrect_answers} = questions[index];
+  const answers = [...incorrect_answers]
+  const tempoIndex = Math.floor(Math.random() * 4)
+  console.log(tempoIndex)
+  if(tempoIndex === 2){
+    answers.push(correct_answer)
+  } else{
+    answers.push(answers[tempoIndex])
+    answers[tempoIndex] = correct_answer
+  }
+
+  return (
+    <main>
+      <Modal />
+      <section className='quiz'>
+        <p className='correct-answers'>
+          correct answers : {betul}/{index}
+        </p>
+        <article className='container'>
+          <h2 dangerouslySetInnerHTML={{__html: question}} />
+        <div className='btn-container'>
+          {answers.map((answer,index)=>{
+            return (
+              <button
+              key={index}
+              onClick={()=>checkAnswer(correct_answer === answer)}
+              className='answer-btn'
+              dangerouslySetInnerHTML={{__html:answer}}></button>
+            )
+          })}
+        </div>
+        </article>
+        <button className='next-question' onClick={()=>nextQuestion()}>
+          Next Question
+        </button>
+      </section>
+    </main>
+  )
 }
 
 export default App
